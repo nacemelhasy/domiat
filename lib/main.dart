@@ -1,7 +1,9 @@
 import 'package:domiat/View/OnBordingView.dart';
 import 'package:domiat/componets/defaultCS.dart';
 import 'package:domiat/viewmodel/HomeViewModel.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'View/HomeView.dart';
@@ -12,11 +14,17 @@ HomeViewModel hvm = HomeViewModel(); // for access at HomeViewModel class
 Repo repo = Repo(); // for access at Repo class
 void main() async {
   WidgetsFlutterBinding.ensureInitialized(); //
+  SystemChrome.setPreferredOrientations(
+      [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
+
+ await Firebase.initializeApp(
+  );
   pref = await SharedPreferences
       .getInstance(); // here i use this line for initial sheardprefrenses
-
   // for retrive points from local database
- pref.containsKey('points') ?HomeViewModel.points  = repo.getInt(key: 'points')! : 0 ;
+  pref.containsKey('points')
+      ? HomeViewModel.points = repo.getInt(key: 'points')!
+      : 0;
   runApp(const MyApp());
 }
 
@@ -27,6 +35,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        theme: ThemeData(primaryColor: defautlColor), home: OnBordingView());
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(primaryColor: defautlColor),
+        home: OnBordingView());
   }
 }

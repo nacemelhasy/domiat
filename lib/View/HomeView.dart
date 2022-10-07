@@ -11,7 +11,7 @@ class HomeView extends StatefulWidget {
 
 class ViewHomeView extends State<HomeView> {
   HomeViewModel data = new HomeViewModel();
-
+  bool isLoading = true;
   @override
   Widget build(BuildContext context) {
     return Directionality(
@@ -31,12 +31,26 @@ class ViewHomeView extends State<HomeView> {
                     label: text(context, data.leadingAppBar))
               ],
             ),
-            SizedBox(width: width(context)*0.05,),
+            SizedBox(
+              width: width(context) * 0.05,
+            ),
           ],
         ),
         body: Stack(
           children: [
-            WebView(initialUrl: data.urlPage),
+            WebView(
+              initialUrl: data.urlPage,
+              onPageFinished: (val) {
+                setState(() {
+                  isLoading = !isLoading;
+                });
+              },
+            ),
+            isLoading
+                ? Center(
+                    child: indicator(),
+                  )
+                : Container(),
             Positioned(
               bottom: 0,
               child: Container(

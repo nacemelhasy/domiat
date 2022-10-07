@@ -19,11 +19,22 @@ class HomeViewModel {
  بجوار مركز اسامه خليل للأشعة
  وسوف تحصل على نقاط
 ''';
+  String textDialogGiftCart = '''
+تهانينا حصلت على كرت اتصالات رقم الكرت : 
+''';
   String buttonOfSend = 'أرسل';
   String successSent =
       'تهانينا عند وصولك لي  كلا من 20 أو 40 أو 60 نقطة أي ضعف العدد سوف تحصل على جائزة';
-   static int points = 0  ;
+  static int points = 0;
 
+  List numberOfCarts = [
+    '',
+    '09410146513248465',
+    '09410146513248412',
+    '09410146345252346',
+    '09410146513223477',
+    '09410146513248488',
+  ];
   GlobalKey<FormState> keyFiled = new GlobalKey<FormState>();
 
 // for show dilaog plus points
@@ -82,13 +93,34 @@ class HomeViewModel {
                             // back screen
                             Navigator.pop(context);
                             // show dialog
-                            awesome(context,
+                            if (points != 20 &&
+                                points != 40 &&
+                                points != 60 &&
+                                points != 80 &&
+                                points != 100){   awesome(context,
                                 dialogType: DialogType.SUCCES,
                                 body: SizedBox(
                                   height: height(context) * 0.12,
                                   child: text(context, successSent,
                                       textAlign: TextAlign.right),
-                                ));
+                                ));}
+
+                            // FOR give her gift
+                            if (points == 20 ||
+                                points == 40 ||
+                                points == 60 ||
+                                points == 80 ||
+                                points == 100) {
+                              int  indexOfCart = (points / 20).toInt() ;
+                              awesome(context,
+                                  dialogType: DialogType.SUCCES,
+                                  body: SizedBox(
+                                    height: height(context) * 0.12,
+                                    child: text(context,
+                                        '${textDialogGiftCart} ${numberOfCarts[indexOfCart]}',
+                                        textAlign: TextAlign.right),
+                                  ));
+                            }
                             // for save point
                             repo.setInt(key: 'points', value: points);
                           }

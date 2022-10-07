@@ -1,6 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.domiat">
-   <application
+    <application
         android:label="دليل محافظة دمياط السياحي"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
@@ -35,4 +35,5 @@
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+
 </manifest>

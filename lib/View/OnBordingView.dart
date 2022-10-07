@@ -1,14 +1,41 @@
 import 'package:domiat/componets/allCompontes.dart';
 import 'package:domiat/componets/defaultCS.dart';
 import 'package:domiat/viewmodel/OnBorViewModel.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-class OnBordingView extends StatelessWidget {
-OnBordingViewModel data = new OnBordingViewModel();
+import 'package:mobile_number/mobile_number.dart';
+
+class OnBordingView extends StatefulWidget {
+
    OnBordingView({Key? key}) : super(key: key);
+
+  @override
+  State<OnBordingView> createState() => _OnBordingViewState();
+}
+
+class _OnBordingViewState extends State<OnBordingView> {
+OnBordingViewModel data = new OnBordingViewModel();// for access at data from viewmodel onboarding
+
+@override
+  void initState() {
+    // for check the have permssion or not 
+      MobileNumber.listenPhonePermission((isPermissionGranted) {
+      if (isPermissionGranted) {
+        data.initMobileNumberState();
+      } else {
+      }
+    });
+// if the have permission will listen from this function not listen above function
+          data.initMobileNumberState();
+    
+
+
+    super.initState();
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,6 +67,8 @@ OnBordingViewModel data = new OnBordingViewModel();
         label: text(context, 'هيا بنا'),
         onPressed: (){
           data.rout(context);
+          var videoName;
+         
         },
       ),)
       )
